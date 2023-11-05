@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <Grid templateColumns="repeat(2, 1fr)" gap="4">
+      <Grid templateColumns="repeat(2, 1fr)" gap="4" padding={4}>
         {books.map((book) => (
           <Card key={book.id} book={book} onEdit={onEdit} onDelete={onDelete} />
         ))}

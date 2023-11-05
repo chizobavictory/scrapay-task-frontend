@@ -20,8 +20,7 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
       </Text>
       <Text>{book.description}</Text>
       <Flex mt="2">
-        <Button onClick={onEdit}>
-          <EditIcon />
+      <Button onClick={onEdit} marginRight="2">          <EditIcon />
         </Button>
         <Button onClick={onDelete}>
           <DeleteIcon />
