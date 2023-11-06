@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -30,8 +29,6 @@ const EditBookModal: React.FC<EditBookModalProps> = ({ isOpen, onClose, book, on
   const [description, setDescription] = useState(book.description);
 
   const handleEditBook = () => {
-    // You can validate the input here if needed
-    // Then, call the onEdit function to edit the book
     onEdit();
     onClose();
   };

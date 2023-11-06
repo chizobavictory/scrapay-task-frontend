@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import {
-  Box,
   Text,
   Button,
   Flex,
-  IconButton,
   Grid,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";

@@ -1,7 +1,4 @@
-// AddBookModal.tsx
-
 import {
-  Box,
   Modal,
   ModalOverlay,
   ModalContent,
