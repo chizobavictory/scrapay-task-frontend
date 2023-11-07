@@ -8,6 +8,7 @@ import {
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import DeleteBookModal from "./DeleteBookModal";
 import EditBookModal from "./EditBookModal";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface CardProps {
   book: {
@@ -22,6 +23,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth0();
 
   const handleEditClick = () => {
     setEditModalOpen(true);
@@ -46,13 +48,17 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
       </Text>
       <Text>{book.description}</Text>
       <Flex mt="2">
-        <Button onClick={handleEditClick} marginRight="2">
-          <EditIcon />
-        </Button>
-        <Button onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </Button>
-      </Flex>
+      {isAuthenticated && (
+        <>
+          <Button onClick={handleEditClick} marginRight="2">
+            <EditIcon />
+          </Button>
+          <Button onClick={handleDeleteClick}>
+            <DeleteIcon />
+          </Button>
+        </>
+      )}
+    </Flex>
 
       {isEditModalOpen && (
         <EditBookModal

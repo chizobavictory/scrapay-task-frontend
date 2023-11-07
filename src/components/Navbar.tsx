@@ -11,7 +11,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
@@ -20,6 +19,7 @@ import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import AddBookModal from "./AddBookModal";
 import logo from "../assets/nestjs-light.svg";
 import avatar from "../assets/profile-circle-fill.svg";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Props {
   children: React.ReactNode;
@@ -50,6 +50,7 @@ const NavLink = (props: Props) => {
 };
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -71,20 +72,26 @@ const Navbar: React.FC = () => {
             <Text fontWeight="bold">Nest Book Store</Text>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4} leftIcon={<AddIcon />} onClick={() => setModalOpen(true)}>
-              Add Book
-            </Button>
-            <Menu>
-              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-                <Avatar size={"sm"} src={avatar} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>USERNAME:</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
+            {isAuthenticated ? (
+              <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4} leftIcon={<AddIcon />} onClick={() => setModalOpen(true)}>
+                Add Book
+              </Button>
+            ) : (
+              <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4} onClick={() => loginWithRedirect()}>
+                Login
+              </Button>
+            )}
+
+            {isAuthenticated && (
+              <Menu>
+                <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+                  <Avatar size={"sm"} src={avatar} />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
           </Flex>
         </Flex>
         {isOpen ? (
