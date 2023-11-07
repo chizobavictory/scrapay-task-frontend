@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Button, Flex, Grid } from "@chakra-ui/react";
+import { Text, Button, Flex, Box } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import DeleteBookModal from "./DeleteBookModal";
 import EditBookModal from "./EditBookModal";
@@ -20,13 +20,18 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const { isAuthenticated } = useAuth0();
 
-
+  const cardStyles = {
+    borderWidth: "1px",
+    borderRadius: "lg",
+    overflow: "hidden",
+    p: "2",
+  };
 
   if (!isAuthenticated) {
     return (
-      <Text>
-        Please log in to view the bookstore.
-      </Text>
+      <Box {...cardStyles}>
+        <Text>Please log in to view the bookstore.</Text>
+      </Box>
     );
   }
 
@@ -47,7 +52,7 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
   };
 
   return (
-    <Grid templateColumns="1fr" gap="2" borderWidth="1px" borderRadius="lg" overflow="hidden" p="2">
+    <Box {...cardStyles}>
       <Text fontSize="xl" fontWeight="bold" mb="2">
         {book.name}
       </Text>
@@ -77,7 +82,7 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
           onDelete={onDelete}
         />
       )}
-    </Grid>
+    </Box>
   );
 };
 
