@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Text,
-  Button,
-  Flex,
-  Grid,
-} from "@chakra-ui/react";
+import { Text, Button, Flex, Grid } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import DeleteBookModal from "./DeleteBookModal";
 import EditBookModal from "./EditBookModal";
@@ -24,6 +19,16 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const { isAuthenticated } = useAuth0();
+
+
+
+  if (!isAuthenticated) {
+    return (
+      <Text>
+        Please log in to view the bookstore.
+      </Text>
+    );
+  }
 
   const handleEditClick = () => {
     setEditModalOpen(true);
@@ -48,17 +53,13 @@ const Card: React.FC<CardProps> = ({ book, onEdit, onDelete }) => {
       </Text>
       <Text>{book.description}</Text>
       <Flex mt="2">
-      {isAuthenticated && (
-        <>
-          <Button onClick={handleEditClick} marginRight="2">
-            <EditIcon />
-          </Button>
-          <Button onClick={handleDeleteClick}>
-            <DeleteIcon />
-          </Button>
-        </>
-      )}
-    </Flex>
+        <Button onClick={handleEditClick} marginRight="2">
+          <EditIcon />
+        </Button>
+        <Button onClick={handleDeleteClick}>
+          <DeleteIcon />
+        </Button>
+      </Flex>
 
       {isEditModalOpen && (
         <EditBookModal
